@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FSF",
+    "FWF",
+    "FWF"
+  ],
+  "key": {
+    "F": "minecraft:feather",
+    "W": "minecraft:honeycomb",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "icarus-wings:icarus_wings",
+    "count": 1
+  }
+}
