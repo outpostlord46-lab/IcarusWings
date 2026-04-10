@@ -1,3 +1,4 @@
+
 # 🪽 Icarus Wings
 
 A **Fabric mod for Minecraft 1.21.11** that introduces a tiered progression for exploration: the weaker **Icarus Wings** and the upgraded **Mechanical Wings**.
@@ -26,6 +27,8 @@ A heavy-duty steampunk set of wings..
 
 * **Flap / Boost:** Press the **Jump Key** (Default: `Space`) while gliding to gain altitude and speed.
 * **Stamina Bar:** A custom HUD element appears above your hotbar while wearing the wings. This displays your flap cooldown—you cannot flap again until the bar is fully recharged.
+* 
+![ezgif-85823f3dfd0be0ef](https://github.com/user-attachments/assets/4b738f78-3386-4d48-b0d7-6723b5fc24f5)
 
 ---
 
