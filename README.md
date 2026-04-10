@@ -8,7 +8,7 @@ A **Fabric mod for Minecraft 1.21.11** that introduces a tiered progression for 
 
 ### ✨ Icarus Wings (Early Game)
 Lightweight, myth-inspired wings.
-* **Risk:** High mobility but extremely fragile construction.
+* **Risk:** High mobility and reduced fall damage but extremely fragile construction.
 * **Durability:** Low durability and when durability reaches **0**, the wings **shatter and disappear permanently**.
 * **Fuel:** Uses Stamina.
 
@@ -62,8 +62,12 @@ Mechanical wings lose durability through:
 ## ⚒️ Crafting Progression
 This mod bridges the gap between early-game exploration and the end-game Elytra.
 
-1. **Icarus Wings:** Found or crafted as your first taste of flight.
+1. **Icarus Wings:** Found in dungeons or strongholds or crafted as your first taste of flight.
+   <img width="1048" height="786" alt="Screenshot 2026-04-10 192126" src="https://github.com/user-attachments/assets/b73a7e8a-d3da-4d64-9778-43f83cef5925" />
+
 2. **Mechanical Wings:** An industrial upgrade requiring the Icarus Wings as a base, reinforced with **Iron** and **Leather** for mechanical lift.
+   <img width="1015" height="762" alt="Screenshot 2026-04-10 192216" src="https://github.com/user-attachments/assets/262ee62a-eee0-4785-91d1-39e34e86d43c" />
+
 
 ---
 
