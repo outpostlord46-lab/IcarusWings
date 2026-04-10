@@ -1,0 +1,14 @@
+{
+  "item.icarus-wings.icarus_wings": "Icarus Wings",
+  "item.icarus-wings.mechanical_wings": "§bMechanical Wings",
+  "advancement.icarus-wings.too_close_to_the_sun.title": "Maybe Dad had a Point",
+  "advancement.icarus-wings.too_close_to_the_sun.description": "Let your wings melt by flying too high",
+  "advancement.icarus-wings.dont_fly_too_close.title": "Don't Fly too Close",
+  "advancement.icarus-wings.dont_fly_too_close.description": "Acquire Icarus Wings",
+  "advancement.icarus-wings.industrial_upgrade.title": "Industrial Upgrade",
+  "advancement.icarus-wings.industrial_upgrade.description": "Craft Mechanical Wings - coal powered",
+  "advancement.icarus-wings.struck_by_innovation.title": "Struck by Innovation",
+  "advancement.icarus-wings.struck_by_innovation.description": "Get struck by lightning while wearing Mechanical Wings",
+  "advancement.icarus-wings.second_chance_engineering.title": "Second Chance Engineering",
+  "advancement.icarus-wings.second_chance_engineering.description": "Repair Mechanical Wings"
+}

@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "icarus-wings:icarus_wings"
+    },
+    "title": {
+      "translate": "advancement.icarus-wings.dont_fly_too_close.title"
+    },
+    "description": {
+      "translate": "advancement.icarus-wings.dont_fly_too_close.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["icarus-wings:icarus_wings"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ]
+}

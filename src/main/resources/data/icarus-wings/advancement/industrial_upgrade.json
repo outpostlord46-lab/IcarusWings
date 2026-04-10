@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "id": "icarus-wings:icarus_wings"
+    },
+    "title": {
+      "translate": "advancement.icarus-wings.industrial_upgrade.title"
+    },
+    "description": {
+      "translate": "advancement.icarus-wings.industrial_upgrade.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "criteria": {
+    "crafted_wings": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "icarus-wings:mechanical_wings"
+      }
+    }
+  }
+}

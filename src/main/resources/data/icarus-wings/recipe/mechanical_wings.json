@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GSG",
+    "FWF",
+    "GGG"
+  ],
+  "key": {
+    "F": "minecraft:iron_block",
+    "W": "icarus-wings:icarus_wings",
+    "S": "minecraft:clock",
+    "G": "minecraft:leather"
+  },
+  "result": {
+    "id": "icarus-wings:mechanical_wings",
+    "count": 1
+  }
+}

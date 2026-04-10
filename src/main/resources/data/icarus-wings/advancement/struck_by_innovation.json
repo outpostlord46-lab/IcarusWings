@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {
+      "id": "icarus-wings:icarus_wings"
+    },
+    "title": {
+      "translate": "advancement.icarus-wings.struck_by_innovation.title"
+    },
+    "description": {
+      "translate": "advancement.icarus-wings.struck_by_innovation.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "criteria": {
+    "struck": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

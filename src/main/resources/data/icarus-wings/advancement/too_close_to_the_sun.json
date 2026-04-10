@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {
+      "id": "icarus-wings:icarus_wings"
+    },
+    "title": {
+      "translate": "advancement.icarus-wings.too_close_to_the_sun.title"
+    },
+    "description": {
+      "translate": "advancement.icarus-wings.too_close_to_the_sun.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "criteria": {
+    "wings_melted": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

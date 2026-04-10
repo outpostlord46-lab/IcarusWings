@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "icarus-wings",
+	"version": "${version}",
+	"name": "icarus wings",
+	"description": "Adds the wings of Icarus for players to fly around",
+	"authors": [
+		"FROG__MAN"
+	],
+	"contact": {
+		"homepage": "https://www.youtube.com/@FROGMANY",
+		"sources": "https://modrinth.com/user/FROG__MAN"
+	},
+	"license": "MIT",
+	"icon": "assets/icarus-wings/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.frog.IcarusWings"
+		],
+		"client": [
+			"net.frog.IcarusWingsClient"
+		]
+	},
+	"mixins": [
+		"icarus-wings.mixins.json",
+		{
+			"config": "icarus-wings.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": ">=1.21.9 <=1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

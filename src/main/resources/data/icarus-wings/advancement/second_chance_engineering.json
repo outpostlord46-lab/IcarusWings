@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {
+      "id": "icarus-wings:icarus_wings"
+    },
+    "title": {
+      "translate": "advancement.icarus-wings.second_chance_engineering.title"
+    },
+    "description": {
+      "translate": "advancement.icarus-wings.second_chance_engineering.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "show_toast": true
+  },
+  "criteria": {
+    "repair_event": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
