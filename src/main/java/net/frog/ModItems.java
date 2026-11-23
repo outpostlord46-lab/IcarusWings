@@ -11,6 +11,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
@@ -60,6 +61,7 @@ public class ModItems {
             new Item(new Item.Properties()
                     .setId(MECHANICAL_WINGS_KEY)
                     .durability(400)
+                    .rarity(Rarity.RARE)
                     .repairable(Items.IRON_INGOT)
                     .component(DataComponents.EQUIPPABLE,
                             Equippable.builder(EquipmentSlot.CHEST)
