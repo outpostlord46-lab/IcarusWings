@@ -1,5 +1,6 @@
 package net.frog;
 
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -7,7 +8,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Unit;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -70,5 +73,11 @@ public class ModItems {
                     .component(DataComponents.GLIDER, Unit.INSTANCE))
     );
 
-    public static void registerItems() {}
+    private static final ResourceKey<CreativeModeTab> TOOLS_AND_UTILITIES =
+            ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace("tools_and_utilities"));
+
+    public static void registerItems() {
+        CreativeModeTabEvents.modifyOutputEvent(TOOLS_AND_UTILITIES)
+                .register(output -> output.insertAfter(Items.ELYTRA, ICARUS_WINGS, MECHANICAL_WINGS));
+    }
 }
