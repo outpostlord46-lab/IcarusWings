@@ -22,21 +22,25 @@ public class IcarusWingsClient implements ClientModInitializer {
     private static final int SEMI_CIRCLE_HEIGHT = 9;  // matches the texture height
 
     private boolean wasJumpPressed = false;
-    private long lastFlapClientTick = -100;
+    // Own monotonic tick counter: player.tickCount restarts at 0 whenever the client
+    // recreates the LocalPlayer (every dimension change and respawn), which used to leave
+    // the cooldown stuck after visiting the Nether.
+    private long clientTicks = 0;
+    private long lastFlapClientTick = -WingUtil.FLAP_COOLDOWN_TICKS;
     private boolean hudErrorLogged = false;
 
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            clientTicks++;
             if (client.player == null) return;
 
             boolean jumpPressed = client.options.keyJump.isDown();
 
             if (jumpPressed && !wasJumpPressed && client.player.isFallFlying()) {
-                long currentTick = client.player.tickCount;
-                if (currentTick - lastFlapClientTick >= WingUtil.FLAP_COOLDOWN_TICKS) {
+                if (clientTicks - lastFlapClientTick >= WingUtil.FLAP_COOLDOWN_TICKS) {
                     ClientPlayNetworking.send(new FlapPayload());
-                    lastFlapClientTick = currentTick;
+                    lastFlapClientTick = clientTicks;
                 }
             }
             wasJumpPressed = jumpPressed;
@@ -66,7 +70,7 @@ public class IcarusWingsClient implements ClientModInitializer {
                 && WingUtil.hasFuel(client.player.getInventory());
         if (!wearingIcarus && !wearingMechanical) return;
 
-        long ticksSinceFlap = client.player.tickCount - lastFlapClientTick;
+        long ticksSinceFlap = clientTicks - lastFlapClientTick;
         float progress = Math.min((float) ticksSinceFlap / WingUtil.FLAP_COOLDOWN_TICKS, 1.0f);
 
         int screenWidth = client.getWindow().getGuiScaledWidth();
