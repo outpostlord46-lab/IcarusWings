@@ -57,7 +57,8 @@ public class IcarusWingsClient implements ClientModInitializer {
 
     private void extractFlapBar(GuiGraphicsExtractor graphics) {
         var client = Minecraft.getInstance();
-        if (client.player == null) return;
+        // only while gliding, so the XP bar stays visible the rest of the time
+        if (client.player == null || !client.player.isFallFlying()) return;
 
         var chestStack = client.player.getItemBySlot(EquipmentSlot.CHEST);
         boolean wearingIcarus = chestStack.is(ModItems.ICARUS_WINGS);
