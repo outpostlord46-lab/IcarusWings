@@ -1,16 +1,16 @@
 {
+  "parent": "icarus-wings:dont_fly_too_close",
   "display": {
     "icon": {
       "id": "icarus-wings:mechanical_wings"
     },
-    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "title": {
       "translate": "advancement.icarus-wings.industrial_upgrade.title"
     },
     "description": {
       "translate": "advancement.icarus-wings.industrial_upgrade.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "announce_to_chat": true,
     "show_toast": true
   },

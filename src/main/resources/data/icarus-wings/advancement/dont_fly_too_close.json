@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancement.icarus-wings.dont_fly_too_close.description"
     },
-    "frame": "challenge",
+    "frame": "task",
     "announce_to_chat": true,
     "show_toast": true
   },

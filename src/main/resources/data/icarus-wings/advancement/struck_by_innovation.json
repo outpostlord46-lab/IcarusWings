@@ -1,9 +1,9 @@
 {
+  "parent": "icarus-wings:industrial_upgrade",
   "display": {
     "icon": {
       "id": "icarus-wings:mechanical_wings"
     },
-    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "title": {
       "translate": "advancement.icarus-wings.struck_by_innovation.title"
     },

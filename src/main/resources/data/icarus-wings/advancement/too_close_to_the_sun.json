@@ -1,9 +1,9 @@
 {
+  "parent": "icarus-wings:dont_fly_too_close",
   "display": {
     "icon": {
       "id": "icarus-wings:icarus_wings"
     },
-    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "title": {
       "translate": "advancement.icarus-wings.too_close_to_the_sun.title"
     },
