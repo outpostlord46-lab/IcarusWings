@@ -3,6 +3,7 @@
 	"package": "net.frog.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
+        "AnvilRepairMixin",
         "fallDamageMixin",
         "movementSpeedMixin"
 	],
