@@ -3,6 +3,7 @@
     "icon": {
       "id": "icarus-wings:icarus_wings"
     },
+    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "title": {
       "translate": "advancement.icarus-wings.dont_fly_too_close.title"
     },
@@ -19,7 +20,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["icarus-wings:icarus_wings"]
+            "items": [
+              "icarus-wings:icarus_wings"
+            ]
           }
         ]
       }

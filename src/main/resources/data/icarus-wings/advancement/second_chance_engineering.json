@@ -3,6 +3,7 @@
     "icon": {
       "id": "icarus-wings:icarus_wings"
     },
+    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "title": {
       "translate": "advancement.icarus-wings.second_chance_engineering.title"
     },
