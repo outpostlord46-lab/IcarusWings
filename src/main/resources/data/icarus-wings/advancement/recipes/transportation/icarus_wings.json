@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_feather": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:feather"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipes": "icarus-wings:icarus_wings"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_feather"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "icarus-wings:icarus_wings"
+    ]
+  }
+}
