@@ -5,9 +5,13 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,6 +35,11 @@ public class IcarusWingsServerTick {
     /** Was 1/750 per tick; same average (~37.5 s) when rolled once per second. */
     private static final float LIGHTNING_CHANCE_PER_SECOND = 20f / 750f;
 
+    /** Plays at the player's position for everyone nearby, including the player. */
+    private static void playSound(ServerPlayer player, SoundEvent sound, float volume, float pitch) {
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), sound, SoundSource.PLAYERS, volume, pitch);
+    }
+
     public static void register() {
         PayloadTypeRegistry.serverboundPlay().register(FlapPayload.ID, FlapPayload.CODEC);
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> lastFlapTime.remove(handler.player.getUUID()));
@@ -45,7 +54,7 @@ public class IcarusWingsServerTick {
             Inventory inv = player.getInventory();
             boolean hasCoal = WingUtil.hasFuel(inv);
 
-            if (!isIcarus && !(isMechanical && hasCoal)) return;
+            if (!isIcarus && !isMechanical) return;
             if (!player.isFallFlying()) return;
 
             long currentTick = player.tickCount;
@@ -59,6 +68,13 @@ public class IcarusWingsServerTick {
             if (currentTick - lastFlap < WingUtil.FLAP_COOLDOWN_TICKS) return;
             lastFlapTime.put(player.getUUID(), currentTick);
 
+            if (isMechanical && !hasCoal) {
+                // out of fuel: quiet click so the player knows why nothing happened
+                // (after the cooldown check, matching the client, which also starts its cooldown)
+                playSound(player, SoundEvents.DISPENSER_FAIL, 0.4f, 1.2f);
+                return;
+            }
+
             Vec3 vel = player.getDeltaMovement();
             player.setDeltaMovement(vel.x, Math.min(vel.y + 1, 1.2), vel.z);
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
@@ -66,11 +82,16 @@ public class IcarusWingsServerTick {
             if (isMechanical) {
                 if (!WingUtil.consumeFuel(inv)) return;
                 safeDamage(chestStack, 4, player);
+                // kept deliberately quiet (vanilla pistons play at 0.5)
+                playSound(player, SoundEvents.PISTON_EXTEND, 0.35f, 0.8f);
+                player.level().sendParticles(ParticleTypes.LARGE_SMOKE,
+                        player.getX(), player.getY() + 1.0, player.getZ(), 6, 0.3, 0.2, 0.3, 0.02);
             }
 
             if (isIcarus) {
                 player.causeFoodExhaustion(1.0f);
                 damageWings(chestStack, 6, player);
+                playSound(player, SoundEvents.ENDER_DRAGON_FLAP, 0.5f, 1.5f);
             }
 
         });
