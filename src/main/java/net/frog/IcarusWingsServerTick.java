@@ -2,6 +2,7 @@ package net.frog;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -29,6 +30,7 @@ public class IcarusWingsServerTick {
 
     public static void register() {
         PayloadTypeRegistry.serverboundPlay().register(FlapPayload.ID, FlapPayload.CODEC);
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> lastFlapTime.remove(handler.player.getUUID()));
 
         ServerPlayNetworking.registerGlobalReceiver(FlapPayload.ID, (payload, context) -> {
             ServerPlayer player = context.player();
