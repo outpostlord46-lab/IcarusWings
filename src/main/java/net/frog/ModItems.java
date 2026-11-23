@@ -4,7 +4,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Unit;
@@ -21,12 +20,12 @@ public class ModItems {
     //ICARUS WINGS
     public static final ResourceKey<Item> ICARUS_WINGS_KEY = ResourceKey.create(
             Registries.ITEM,
-            Identifier.fromNamespaceAndPath("icarus-wings", "icarus_wings")
+            IcarusWings.id("icarus_wings")
     );
 
     public static final ResourceKey<EquipmentAsset> ICARUS_WINGS_EQUIPMENT = ResourceKey.create(
             EquipmentAssets.ROOT_ID,
-            Identifier.fromNamespaceAndPath("icarus-wings", "icarus_wings")
+            IcarusWings.id("icarus_wings")
     );
 
     public static final Item ICARUS_WINGS = Registry.register(
@@ -47,12 +46,12 @@ public class ModItems {
     //MECHANICAL WINGS
     public static final ResourceKey<Item> MECHANICAL_WINGS_KEY = ResourceKey.create(
             Registries.ITEM,
-            Identifier.fromNamespaceAndPath("icarus-wings", "mechanical_wings")
+            IcarusWings.id("mechanical_wings")
     );
 
     public static final ResourceKey<EquipmentAsset> MECHANICAL_WINGS_EQUIPMENT = ResourceKey.create(
             EquipmentAssets.ROOT_ID,
-            Identifier.fromNamespaceAndPath("icarus-wings", "mechanical_wings")
+            IcarusWings.id("mechanical_wings")
     );
 
     public static final Item MECHANICAL_WINGS = Registry.register(

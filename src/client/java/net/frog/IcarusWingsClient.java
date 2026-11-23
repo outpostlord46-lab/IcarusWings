@@ -9,17 +9,13 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class IcarusWingsClient implements ClientModInitializer {
 	private boolean wasJumpPressed = false;
 	private long lastFlapClientTick = -100;
-	private static final int FLAP_COOLDOWN_TICKS = 80;
-    private static final Identifier FLAP_BAR_ID = Identifier.fromNamespaceAndPath("icarus-wings", "flap_cooldown_bar");
+    private static final Identifier FLAP_BAR_ID = IcarusWings.id("flap_cooldown_bar");
     private boolean hudErrorLogged = false;
-    private static final Identifier SEMI_CIRCLE_TEXTURE = Identifier.fromNamespaceAndPath("icarus-wings", "textures/gui/semi_circle.png");
+    private static final Identifier SEMI_CIRCLE_TEXTURE = IcarusWings.id("textures/gui/semi_circle.png");
 
 	@Override
 	public void onInitializeClient() {
@@ -30,7 +26,7 @@ public class IcarusWingsClient implements ClientModInitializer {
 
 			if (jumpPressed && !wasJumpPressed && client.player.isFallFlying()) {
 				long currentTick = client.player.tickCount;
-				if (currentTick - lastFlapClientTick >= FLAP_COOLDOWN_TICKS) {
+				if (currentTick - lastFlapClientTick >= WingUtil.FLAP_COOLDOWN_TICKS) {
 					ClientPlayNetworking.send(new FlapPayload());
 					lastFlapClientTick = currentTick;
 				}
@@ -56,22 +52,14 @@ public class IcarusWingsClient implements ClientModInitializer {
             var client = Minecraft.getInstance();
             if (client.player == null) return;
 
-            Inventory inv = client.player.getInventory();
-            boolean hasCoal = false;
-            for (int i = 0; i < inv.getContainerSize(); i++) {
-                ItemStack stack = inv.getItem(i);
-                if (stack.is(Items.COAL) || stack.is(Items.CHARCOAL)) {
-                    hasCoal = true;
-                    break;
-                }
-            }
+            boolean hasCoal = WingUtil.hasFuel(client.player.getInventory());
 
             var chestStack = client.player.getItemBySlot(EquipmentSlot.CHEST);
             boolean wearingIcarus = chestStack.is(ModItems.ICARUS_WINGS);
             boolean wearingMechanical = chestStack.is(ModItems.MECHANICAL_WINGS) && hasCoal;
 
             long ticksSinceFlap = client.player.tickCount - lastFlapClientTick;
-            float progress = Math.min((float) ticksSinceFlap / FLAP_COOLDOWN_TICKS, 1.0f);
+            float progress = Math.min((float) ticksSinceFlap / WingUtil.FLAP_COOLDOWN_TICKS, 1.0f);
 
             if (wearingIcarus || wearingMechanical) {
                 int screenWidth = client.getWindow().getGuiScaledWidth();
