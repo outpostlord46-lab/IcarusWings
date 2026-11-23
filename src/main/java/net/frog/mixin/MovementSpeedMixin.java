@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class movementSpeedMixin {
+public abstract class MovementSpeedMixin {
 
     @Inject(method = "getSpeed", at = @At("RETURN"), cancellable = true)
     private void applyMechanicalWeightPenalty(CallbackInfoReturnable<Float> cir) {
