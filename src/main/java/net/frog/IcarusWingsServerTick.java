@@ -132,8 +132,8 @@ public class IcarusWingsServerTick {
 
                 //ICARUS WINGS
                 if (isIcarus) {
-                    // too high — melt (day only, > y=150)
-                    if (player.getY() > 150 && isDay && !inEnd) {
+                    // while gliding: too high — melt (day only, > y=150)
+                    if (gliding && player.getY() > 150 && isDay && !inEnd) {
                         damageWings(chestStack, 5, player);
 
                         if (chestStack.isEmpty()) {
