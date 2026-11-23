@@ -3,11 +3,14 @@ package net.frog;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -42,6 +45,11 @@ public class IcarusWings implements ModInitializer {
 			}
 			return InteractionResult.PASS;
 		});
+
+		// Mechanical Wings accept Unbreaking (anvil + book) but not Mending, so no vanilla tag is used.
+		EnchantmentEvents.ALLOW_ENCHANTING.register((enchantment, target, context) ->
+				target.is(ModItems.MECHANICAL_WINGS) && enchantment.is(Enchantments.UNBREAKING)
+						? TriState.TRUE : TriState.DEFAULT);
 
 		// Loot table injection
 		LootTableEvents.MODIFY.register((key, tableBuilder, source, registryLookup) -> {
