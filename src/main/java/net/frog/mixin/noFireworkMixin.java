@@ -1,13 +1,13 @@
 package net.frog.mixin;
 
 import net.frog.ModItems;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FireworkRocketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ActionResult;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.FireworkRocketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,16 +17,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class noFireworkMixin {
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void disableFireworkBoost(World world, PlayerEntity user, Hand hand,
-                                      CallbackInfoReturnable<ActionResult> cir) {
+    private void disableFireworkBoost(Level world, Player user, InteractionHand hand,
+                                      CallbackInfoReturnable<InteractionResult> cir) {
 
-        ItemStack chest = user.getEquippedStack(EquipmentSlot.CHEST);
+        ItemStack chest = user.getItemBySlot(EquipmentSlot.CHEST);
 
         // Check if the player is wearing the Mechanical Wings or Icarus Wings
-        if (chest.isOf(ModItems.MECHANICAL_WINGS) || chest.isOf(ModItems.ICARUS_WINGS)) {
+        if (chest.is(ModItems.MECHANICAL_WINGS) || chest.is(ModItems.ICARUS_WINGS)) {
 
             // If they are cancel the firework
-            cir.setReturnValue(ActionResult.PASS);
+            cir.setReturnValue(InteractionResult.PASS);
         }
     }
 }

@@ -1,9 +1,9 @@
 package net.frog.items;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public class MechanicalWingsItem extends Item {
-    public MechanicalWingsItem(Settings settings) {
+    public MechanicalWingsItem(Properties settings) {
         super(settings);
     }
 }

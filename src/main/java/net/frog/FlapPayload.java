@@ -1,15 +1,15 @@
 package net.frog;
 
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record FlapPayload() implements CustomPayload {
-    public static final Id<FlapPayload> ID = new Id<>(Identifier.of("icarus-wings", "flap"));
-    public static final PacketCodec<PacketByteBuf, FlapPayload> CODEC =
-            PacketCodec.unit(new FlapPayload());
+public record FlapPayload() implements CustomPacketPayload {
+    public static final Type<FlapPayload> ID = new Type<>(Identifier.fromNamespaceAndPath("icarus-wings", "flap"));
+    public static final StreamCodec<FriendlyByteBuf, FlapPayload> CODEC =
+            StreamCodec.unit(new FlapPayload());
 
     @Override
-    public Id<? extends CustomPayload> getId() { return ID; }
+    public Type<? extends CustomPacketPayload> type() { return ID; }
 }
