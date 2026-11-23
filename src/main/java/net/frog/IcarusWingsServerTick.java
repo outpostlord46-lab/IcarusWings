@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Inventory;
@@ -57,7 +57,7 @@ public class IcarusWingsServerTick {
     }
 
     public static void register() {
-        PayloadTypeRegistry.playC2S().register(FlapPayload.ID, FlapPayload.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(FlapPayload.ID, FlapPayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(FlapPayload.ID, (payload, context) -> {
             ServerPlayer player = context.player();
@@ -149,7 +149,7 @@ public class IcarusWingsServerTick {
                     // lightning strike (wings in a storm)
                     // 1 in 750 chance per tick (~every 40 seconds)
                     if (isThundering && inRain && player.getRandom().nextInt(750) == 0) {
-                        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(world, EntitySpawnReason.TRIGGERED);
+                        LightningBolt lightning = EntityTypes.LIGHTNING_BOLT.create(world, EntitySpawnReason.TRIGGERED);
                         if (lightning != null) {
                             lightning.snapTo(player.getX(), player.getY(), player.getZ());
                             world.addFreshEntity(lightning);

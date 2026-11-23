@@ -3,8 +3,9 @@ package net.frog;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,6 +17,8 @@ public class IcarusWingsClient implements ClientModInitializer {
 	private boolean wasJumpPressed = false;
 	private long lastFlapClientTick = -100;
 	private static final int FLAP_COOLDOWN_TICKS = 80;
+    private static final Identifier FLAP_BAR_ID = Identifier.fromNamespaceAndPath("icarus-wings", "flap_cooldown_bar");
+    private boolean hudErrorLogged = false;
     private static final Identifier SEMI_CIRCLE_TEXTURE = Identifier.fromNamespaceAndPath("icarus-wings", "textures/gui/semi_circle.png");
 
 	@Override
@@ -35,7 +38,21 @@ public class IcarusWingsClient implements ClientModInitializer {
 			wasJumpPressed = jumpPressed;
 		});
 
-        HudRenderCallback.EVENT.register((drawContext, tickCounter) -> {
+        // 26.2+: HudRenderCallback was removed; HUD is retained-mode via HudElementRegistry.
+        // addLast keeps the old draw order (HudRenderCallback ran after the vanilla HUD).
+        HudElementRegistry.addLast(FLAP_BAR_ID, (graphics, deltaTracker) -> {
+            try {
+                extractFlapBar(graphics);
+            } catch (Throwable t) {
+                if (!hudErrorLogged) {
+                    hudErrorLogged = true;
+                    IcarusWings.LOGGER.error("Icarus Wings flap bar failed to render; disabling further error logs", t);
+                }
+            }
+        });
+	}
+
+    private void extractFlapBar(GuiGraphicsExtractor drawContext) {
             var client = Minecraft.getInstance();
             if (client.player == null) return;
 
@@ -99,6 +116,5 @@ public class IcarusWingsClient implements ClientModInitializer {
                     );
                 }
             }
-        });
-	}
+    }
 }
