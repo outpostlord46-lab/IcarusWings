@@ -2,14 +2,13 @@
 	"schemaVersion": 1,
 	"id": "icarus-wings",
 	"version": "${version}",
-	"name": "icarus wings",
+	"name": "Icarus Wings",
 	"description": "Adds the wings of Icarus for players to fly around",
 	"authors": [
 		"FROG__MAN"
 	],
 	"contact": {
-		"homepage": "https://www.youtube.com/@FROGMANY",
-		"sources": "https://modrinth.com/user/FROG__MAN"
+		"homepage": "https://www.youtube.com/@FROGMANY"
 	},
 	"license": "MIT",
 	"icon": "assets/icarus-wings/icon.png",
