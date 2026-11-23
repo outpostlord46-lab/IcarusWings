@@ -32,43 +32,42 @@ public class IcarusWingsServerTick {
 
         ServerPlayNetworking.registerGlobalReceiver(FlapPayload.ID, (payload, context) -> {
             ServerPlayer player = context.player();
-            context.server().execute(() -> {
-                //wings check
-                ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
-                boolean isIcarus = chestStack.is(ModItems.ICARUS_WINGS);
-                boolean isMechanical = chestStack.is(ModItems.MECHANICAL_WINGS);
-                Inventory inv = player.getInventory();
-                boolean hasCoal = WingUtil.hasFuel(inv);
+            // Fabric already runs play-payload handlers on the server thread.
+            //wings check
+            ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
+            boolean isIcarus = chestStack.is(ModItems.ICARUS_WINGS);
+            boolean isMechanical = chestStack.is(ModItems.MECHANICAL_WINGS);
+            Inventory inv = player.getInventory();
+            boolean hasCoal = WingUtil.hasFuel(inv);
 
-                if (!isIcarus && !(isMechanical && hasCoal)) return;
-                if (!player.isFallFlying()) return;
+            if (!isIcarus && !(isMechanical && hasCoal)) return;
+            if (!player.isFallFlying()) return;
 
-                long currentTick = player.tickCount;
-                long lastFlap = lastFlapTime.getOrDefault(player.getUUID(), 0L);
+            long currentTick = player.tickCount;
+            long lastFlap = lastFlapTime.getOrDefault(player.getUUID(), 0L);
 
-                if (currentTick < lastFlap) {
-                    lastFlapTime.put(player.getUUID(), 0L);
-                    lastFlap = 0L;
-                }
+            if (currentTick < lastFlap) {
+                lastFlapTime.put(player.getUUID(), 0L);
+                lastFlap = 0L;
+            }
 
-                if (currentTick - lastFlap < WingUtil.FLAP_COOLDOWN_TICKS) return;
-                lastFlapTime.put(player.getUUID(), currentTick);
+            if (currentTick - lastFlap < WingUtil.FLAP_COOLDOWN_TICKS) return;
+            lastFlapTime.put(player.getUUID(), currentTick);
 
-                Vec3 vel = player.getDeltaMovement();
-                player.setDeltaMovement(vel.x, Math.min(vel.y + 1, 1.2), vel.z);
-                player.connection.send(new ClientboundSetEntityMotionPacket(player));
+            Vec3 vel = player.getDeltaMovement();
+            player.setDeltaMovement(vel.x, Math.min(vel.y + 1, 1.2), vel.z);
+            player.connection.send(new ClientboundSetEntityMotionPacket(player));
 
-                if (isMechanical) {
-                    if (!WingUtil.consumeFuel(inv)) return;
-                    safeDamage(chestStack, 4, player);
-                }
+            if (isMechanical) {
+                if (!WingUtil.consumeFuel(inv)) return;
+                safeDamage(chestStack, 4, player);
+            }
 
-                if (isIcarus) {
-                    player.causeFoodExhaustion(1.0f);
-                    damageWings(chestStack, 6, player);
-                }
+            if (isIcarus) {
+                player.causeFoodExhaustion(1.0f);
+                damageWings(chestStack, 6, player);
+            }
 
-            });
         });
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
