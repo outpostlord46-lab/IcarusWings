@@ -1,7 +1,7 @@
 
 # 🪽 Icarus Wings
 
-A **Fabric mod for Minecraft 1.21.11** that introduces a tiered progression for exploration: the weaker **Icarus Wings** and the upgraded **Mechanical Wings**.
+A **Fabric mod for Minecraft 26.3** that introduces a tiered progression for exploration: the weaker **Icarus Wings** and the upgraded **Mechanical Wings**.
 
 ---
 
