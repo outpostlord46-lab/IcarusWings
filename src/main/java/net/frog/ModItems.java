@@ -1,7 +1,5 @@
 package net.frog;
 
-import net.frog.items.IcarusWingsItem;
-import net.frog.items.MechanicalWingsItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,7 +31,7 @@ public class ModItems {
     public static final Item ICARUS_WINGS = Registry.register(
             BuiltInRegistries.ITEM,
             ICARUS_WINGS_KEY,
-            new IcarusWingsItem(new Item.Properties()
+            new Item(new Item.Properties()
                     .setId(ICARUS_WINGS_KEY)
                     .durability(320)
                     .repairable(Items.HONEYCOMB)
@@ -59,7 +57,7 @@ public class ModItems {
     public static final Item MECHANICAL_WINGS = Registry.register(
             BuiltInRegistries.ITEM,
             MECHANICAL_WINGS_KEY,
-            new MechanicalWingsItem(new Item.Properties()
+            new Item(new Item.Properties()
                     .setId(MECHANICAL_WINGS_KEY)
                     .durability(400)
                     .repairable(Items.IRON_INGOT)
