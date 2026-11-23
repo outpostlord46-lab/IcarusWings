@@ -99,13 +99,13 @@ public class IcarusWingsServerTick {
 
                 if (isMechanical) {
                     if (!consumeCoal(inv)) return;
-                    safeDamage(chestStack, 5, player);
+                    safeDamage(chestStack, 4, player);
                 }
 
                 if (isIcarus) {
                     player.addExhaustion(1.0f);
                     chestStack.damage(
-                            10, player.getEntityWorld(), player, item -> player.sendEquipmentBreakStatus(item, EquipmentSlot.CHEST)
+                            6, player.getEntityWorld(), player, item -> player.sendEquipmentBreakStatus(item, EquipmentSlot.CHEST)
                     );
                 }
 
@@ -132,10 +132,6 @@ public class IcarusWingsServerTick {
 
                 //MECHANICAL WINGS
                 if (isMechanical) {
-                    // water damage
-                    if (inWater) {
-                        safeDamage(chestStack, 20, player);
-                    }
 
                     if (isonFire) {
                         safeDamage(chestStack, 3, player);

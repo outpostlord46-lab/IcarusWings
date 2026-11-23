@@ -35,7 +35,7 @@ public class ModItems {
             ICARUS_WINGS_KEY,
             new IcarusWingsItem(new Item.Settings()
                     .registryKey(ICARUS_WINGS_KEY)
-                    .maxDamage(250)
+                    .maxDamage(320)
                     .repairable(Items.HONEYCOMB)
                     .component(DataComponentTypes.EQUIPPABLE,
                             EquippableComponent.builder(EquipmentSlot.CHEST)
