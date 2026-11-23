@@ -10,15 +10,28 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Unit;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 
 public class ModItems {
+
+    /** Fall damage multiplier while worn: x0.5 for Icarus Wings, x1.25 for Mechanical Wings. */
+    private static ItemAttributeModifiers fallDamage(String name, double change) {
+        return ItemAttributeModifiers.builder()
+                .add(Attributes.FALL_DAMAGE_MULTIPLIER,
+                        new AttributeModifier(IcarusWings.id(name + "_fall_damage"), change, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL),
+                        EquipmentSlotGroup.CHEST)
+                .build();
+    }
 
     //ICARUS WINGS
     public static final ResourceKey<Item> ICARUS_WINGS_KEY = ResourceKey.create(
@@ -37,6 +50,7 @@ public class ModItems {
             new Item(new Item.Properties()
                     .setId(ICARUS_WINGS_KEY)
                     .durability(320)
+                    .attributes(fallDamage("icarus_wings", -0.5))
                     .repairable(Items.HONEYCOMB)
                     .component(DataComponents.EQUIPPABLE,
                             Equippable.builder(EquipmentSlot.CHEST)
@@ -63,6 +77,7 @@ public class ModItems {
             new Item(new Item.Properties()
                     .setId(MECHANICAL_WINGS_KEY)
                     .durability(400)
+                    .attributes(fallDamage("mechanical_wings", 0.25))
                     .rarity(Rarity.RARE)
                     .repairable(Items.IRON_INGOT)
                     .component(DataComponents.EQUIPPABLE,
