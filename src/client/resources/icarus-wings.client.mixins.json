@@ -2,7 +2,9 @@
 	"required": true,
 	"package": "net.frog.mixin.client",
 	"compatibilityLevel": "JAVA_25",
-	"client": [],
+	"client": [
+		"BrokenWingsTextureMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
