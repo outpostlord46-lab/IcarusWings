@@ -27,6 +27,9 @@ import static net.frog.WingUtil.safeDamage;
 public class IcarusWingsServerTick {
 
     private static final Map<UUID, Long> lastFlapTime = new HashMap<>();
+    private static final int WEAR_INTERVAL_TICKS = 20;
+    /** Was 1/750 per tick; same average (~37.5 s) when rolled once per second. */
+    private static final float LIGHTNING_CHANCE_PER_SECOND = 20f / 750f;
 
     public static void register() {
         PayloadTypeRegistry.serverboundPlay().register(FlapPayload.ID, FlapPayload.CODEC);
@@ -80,11 +83,14 @@ public class IcarusWingsServerTick {
                 boolean isMechanical = chestStack.is(ModItems.MECHANICAL_WINGS);
                 if (!isIcarus && !isMechanical) continue;
 
+                // Environmental wear is applied once per second (staggered per player), not every tick.
+                if (player.tickCount % WEAR_INTERVAL_TICKS != 0) continue;
+
                 Level world = player.level();
+                boolean gliding = player.isFallFlying();
                 boolean inEnd = world.dimension().equals(Level.END);
                 boolean isDay = world.isBrightOutside();
                 boolean inNether = world.dimension().equals(Level.NETHER);
-                boolean inDesert = world.getBiome(player.blockPosition()).is(Biomes.DESERT);
                 boolean inWater = player.isInWater();
                 boolean inRain = !inWater && world.isRaining() && player.isInWaterOrRain();
                 boolean isonFire = player.isOnFire();
@@ -93,22 +99,22 @@ public class IcarusWingsServerTick {
                 //MECHANICAL WINGS
                 if (isMechanical) {
 
+                    // always: fire and Nether heat
                     if (isonFire) {
                         safeDamage(chestStack, 3, player);
-                    }
-
-                    // too high — damage (day only, > y=250)
-                    if (player.getY() > 350 && isDay && !inEnd) {
-                        safeDamage(chestStack, 5, player);
                     }
 
                     if (inNether) {
                         safeDamage(chestStack, 2, player);
                     }
 
-                    // lightning strike (wings in a storm)
-                    // 1 in 750 chance per tick (~every 40 seconds)
-                    if (isThundering && inRain && player.getRandom().nextInt(750) == 0) {
+                    // while gliding: too high (day only, > y=250)
+                    if (gliding && player.getY() > 350 && isDay && !inEnd) {
+                        safeDamage(chestStack, 5, player);
+                    }
+
+                    // while gliding in a thunderstorm: lightning strike, ~once every 37.5 s on average
+                    if (gliding && isThundering && inRain && player.getRandom().nextFloat() < LIGHTNING_CHANCE_PER_SECOND) {
                         LightningBolt lightning = EntityTypes.LIGHTNING_BOLT.create(world, EntitySpawnReason.TRIGGERED);
                         if (lightning != null) {
                             lightning.snapTo(player.getX(), player.getY(), player.getZ());
@@ -139,29 +145,26 @@ public class IcarusWingsServerTick {
                         }
                     }
 
-                    // nether — melts from heat
+                    // always: nether heat, fire, water
                     if (inNether) {
                         damageWings(chestStack, 2, player);
                     }
 
-                    // desert — melts slowly in the sun
-                    if (inDesert && isDay) {
-                        damageWings(chestStack, 2, player);
-                    }
-
-                    // rain — damages wings
-                    if (inRain) {
-                        damageWings(chestStack, 3, player);
-                    }
-
-                    // fire burns
                     if (isonFire) {
                         damageWings(chestStack, 3, player);
                     }
 
-                    // water — shatters wings fast
                     if (inWater) {
                         damageWings(chestStack, 20, player);
+                    }
+
+                    // while gliding: desert sun (day) and rain
+                    if (gliding && isDay && world.getBiome(player.blockPosition()).is(Biomes.DESERT)) {
+                        damageWings(chestStack, 2, player);
+                    }
+
+                    if (gliding && inRain) {
+                        damageWings(chestStack, 3, player);
                     }
                 }
             }
