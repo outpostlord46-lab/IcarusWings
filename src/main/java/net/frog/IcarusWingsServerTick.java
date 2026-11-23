@@ -108,7 +108,7 @@ public class IcarusWingsServerTick {
                         safeDamage(chestStack, 2, player);
                     }
 
-                    // while gliding: too high (day only, > y=250)
+                    // while gliding: too high (day only, > y=350, above the build limit)
                     if (gliding && player.getY() > 350 && isDay && !inEnd) {
                         safeDamage(chestStack, 5, player);
                     }
