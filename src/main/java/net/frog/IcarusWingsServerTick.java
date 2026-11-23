@@ -114,11 +114,12 @@ public class IcarusWingsServerTick {
                             lightning.snapTo(player.getX(), player.getY(), player.getZ());
                             world.addFreshEntity(lightning);
                             safeDamage(chestStack, 30, player);
-                        }
-                        ServerAdvancementManager loader = server.getAdvancements();
-                        AdvancementHolder advancement = loader.get(IcarusWings.id("struck_by_innovation"));
-                        if (advancement != null) {
-                            player.getAdvancements().award(advancement, "struck");
+
+                            ServerAdvancementManager loader = server.getAdvancements();
+                            AdvancementHolder advancement = loader.get(IcarusWings.id("struck_by_innovation"));
+                            if (advancement != null) {
+                                player.getAdvancements().award(advancement, "struck");
+                            }
                         }
                     }
                 }
