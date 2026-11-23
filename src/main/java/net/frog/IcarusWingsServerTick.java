@@ -103,7 +103,7 @@ public class IcarusWingsServerTick {
                     }
 
                     if (inNether) {
-                        damageWings(chestStack, 2, player);
+                        safeDamage(chestStack, 2, player);
                     }
 
                     // lightning strike (wings in a storm)
